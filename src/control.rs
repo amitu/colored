@@ -105,7 +105,7 @@ impl ShouldColorize {
     pub fn from_env() -> Self {
         ShouldColorize {
             clicolor: ShouldColorize::normalize_env(env::var("CLICOLOR")).unwrap_or(true)
-                && atty::is(atty::Stream::Stdout),
+                && std::io::IsTerminal::is_terminal(&std::io::stdout()),
             clicolor_force: ShouldColorize::resolve_clicolor_force(
                 env::var("NO_COLOR"),
                 env::var("CLICOLOR_FORCE"),
